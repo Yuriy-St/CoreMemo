@@ -29,13 +29,13 @@ class Record:
     def add_birthday(self, value: str):
         self.birthday = Birthday(value)
 
-    def add_email(self, phone_str: str):
+    def add_email(self, email: str):
         pass
 
-    def edit_email(self, old_phone: str, new_phone: str):
+    def edit_email(self, new_email: str):
         pass
 
-    def remove_email(self, phone_str: str):
+    def remove_email(self):
         pass
 
     def __str__(self):
