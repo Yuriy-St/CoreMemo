@@ -8,17 +8,26 @@ from custom_exceptions import RecordNotFountException
 
 
 class AddressBook(UserDict[str, Record]):
-    def add_record(self, value: Record):
-        pass
+    def add_record(self, record: Record):
+        if not record:
+            raise InputException("Invalid data")
 
-    def add_key(self, key: str, value: Record):
-        pass
+        if self.__is_contact_exists(record.name.value):
+            raise InputException("Contact has already exists")
 
-    def find(self, key: str) -> Record | None:
-        pass
+        self.data[record.name.value] = record
 
-    def remove(self, key: str):
-        pass
+    def find(self, name: str) -> Record | None:
+        if not self.__is_contact_exists(name):
+            raise RecordNotFountException("Couldn't find this contact.")
+
+        return self.data[name]
+
+    def remove(self, name: str):
+        if not self.__is_contact_exists(name):
+            raise RecordNotFountException("Couldn't remove this contact. Record not exists")
+
+        del self.data[name]
 
     def get_upcoming_birthdays(self, days):
         current_date = datetime.today().date()
