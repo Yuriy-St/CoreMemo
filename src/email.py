@@ -16,7 +16,7 @@ class Email(Field):
         return constants.EMAIL_REGEXP.match(value) is not None
 
 if __name__ == "__main__":
-    for value in ["groxoucrezauppou-3890@yopmail.com", "a@b.com", "0123456789", "@f.com", "sdsdgsg@com"]:
+    for value in ["groxoucrezauppou-3890@yopmail.com", "a@b.com", "0123456789", "@f.com", "sdsdgsg@com", ""]:
         try:
             email = Email(value)
             print(f"Email: {email}")
