@@ -9,6 +9,7 @@ class Record:
         self.name = Name(name)
         self.phones = []
         self.birthday = None
+        self.email = None
 
     def add_phone(self, phone_str: str):
         pass
@@ -26,7 +27,16 @@ class Record:
         pass
 
     def add_birthday(self, value: str):
+        self.birthday = Birthday(value)
+
+    def add_email(self, phone_str: str):
+        pass
+
+    def edit_email(self, old_phone: str, new_phone: str):
+        pass
+
+    def remove_email(self, phone_str: str):
         pass
 
     def __str__(self):
-        return f"Contact name: {self.name.value}, birthday: {self.birthday}, phones: {'; '.join(p.value for p in self.phones)}"
+        return f"Contact name: {self.name.value}, email: {self.email}, birthday: {self.birthday}, phones: {'; '.join(p.value for p in self.phones)}"
