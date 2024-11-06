@@ -1,5 +1,5 @@
-﻿from src.description import Description
-from src.title import Title
+﻿from description import Description
+from title import Title
 
 
 class Note:

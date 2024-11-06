@@ -1,4 +1,4 @@
-﻿from src.field import Field
+﻿from field import Field
 from custom_exceptions import InputException
 
 class Title(Field):
