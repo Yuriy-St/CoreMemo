@@ -1,6 +1,8 @@
-import constants
-from field import Field
-from custom_exceptions import InputException
+import re
+
+from .constants import PHONE_REGEXP
+from .field import Field
+from .custom_exceptions import InputException
 
 
 class Phone(Field):
@@ -13,7 +15,7 @@ class Phone(Field):
 
     @staticmethod
     def _is_valid_value(value: str) -> bool:
-        return constants.PHONE_REGEXP.match(value) is not None
+        return re.match(PHONE_REGEXP, value) is not None
 
 
 if __name__ == "__main__":

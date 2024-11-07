@@ -1,5 +1,5 @@
-﻿from field import Field
-from custom_exceptions import InputException
+﻿from .field import Field
+from .custom_exceptions import InputException
 
 
 class Description(Field):
@@ -8,6 +8,7 @@ class Description(Field):
             raise InputException("Description must be not empty")
 
         super().__init__(value)
+
 
 if __name__ == "__main__":
     for value in ["123", "abc", "0123456789", ""]:
