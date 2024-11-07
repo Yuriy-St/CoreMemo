@@ -76,20 +76,6 @@ class Record:
             return "No birthdays within the upcoming days."
         
 
-    # @input_error
-    def show_birthday(args, book):
-        if len(args) < 1:
-            return "Please provide a name." 
-        name = args[0]
-        record = book.find(name)
-        if record:
-            if record.birthday:
-                return f"{name}'s birthday is on {record.birthday}"
-            else:
-                return f"No birthday set for {name}."
-        else:
-            return f"Contact '{name}' not found."
-
     def __str__(self):
         return f"Contact name: {self.name.value}, email: {self.email}, birthday: {self.birthday}, phones: {'; '.join(p.value for p in self.phones)}"
 
