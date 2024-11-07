@@ -1,10 +1,12 @@
 from collections import UserDict
 from datetime import datetime, timedelta
 
-from record import Record
+from constants import DATE_FORMAT
 
-from custom_exceptions import InputException
-from custom_exceptions import RecordNotFountException
+from .record import Record
+
+from .custom_exceptions import InputException
+from .custom_exceptions import RecordNotFountException
 
 
 class AddressBook(UserDict[str, Record]):
@@ -25,7 +27,9 @@ class AddressBook(UserDict[str, Record]):
 
     def remove(self, name: str):
         if not self.__is_contact_exists(name):
-            raise RecordNotFountException("Couldn't remove this contact. Record not exists")
+            raise RecordNotFountException(
+                "Couldn't remove this contact. Record not exists"
+            )
 
         del self.data[name]
 
@@ -35,7 +39,7 @@ class AddressBook(UserDict[str, Record]):
 
         for record in self.data.values():  
             if record.birthday:  
-                birthday_this_year = record.birthday.date.replace(year=current_date.year)  
+                birthday_this_year = record.birthday.value.replace(year=current_date.year)  
 
                 # Якщо день народження вже пройшов, беремо наступний рік  
                 if birthday_this_year < current_date:  
@@ -58,5 +62,5 @@ class AddressBook(UserDict[str, Record]):
                         congratulation_date += timedelta(days=1)  
 
                     # Додаємо до списку тільки якщо congratulation_date було встановлено   
-                    upcoming_birthdays.append((record.name.value, congratulation_date.strftime("%d.%m.%Y"))) 
+                    upcoming_birthdays.append((record.name.value, congratulation_date.strftime(DATE_FORMAT))) 
         return upcoming_birthdays

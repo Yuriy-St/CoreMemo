@@ -1,9 +1,28 @@
+from src.address_book import AddressBook
+from src.commands import (
+    add_birthday,
+    add_contact,
+    add_email,
+    add_phone,
+    all_contacts,
+    change_phone,
+    edit_email,
+    find_contact,
+    remove_contact,
+    remove_phone,
+    show_birthday,
+    show_phones,
+)
+
+
 def parse_input(user_input):
     cmd, *args = user_input.split()
     cmd = cmd.strip().lower()
     return cmd, *args
 
+
 def main():
+    book = AddressBook()
     print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
@@ -15,27 +34,31 @@ def main():
         elif command == "hello":
             print("How can I help you?")
         elif command == "add_contact":
-            pass
+            print(add_contact(args, book))
         elif command == "change_phone":
-            pass
+            print(change_phone(args, book))
         elif command == "add_phone":
-            pass
+            print(add_phone(args, book))
         elif command == "remove_phone":
-            pass
+            print(remove_phone(args, book))
         elif command == "add_birthday":
-            pass
+            print(add_birthday(args, book))
+        elif command == "add_email":
+            print(add_email(args, book))
+        elif command == "edit_email":
+            print(edit_email(args, book))
         elif command == "find_contact":
-            pass
+            print(find_contact(args, book))
         elif command == "remove_contact":
-            pass
+            print(remove_contact(args, book))
         elif command == "phones":
-            pass
+            print(show_phones(args, book))
         elif command == "show_birthday":
-            pass
+            print(show_birthday(args, book))
         elif command == "birthdays":
             pass
         elif command == "all_contacts":
-            pass
+            all_contacts(book)
         elif command == "add_note":
             pass
         elif command == "edit_note":
