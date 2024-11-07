@@ -1,5 +1,7 @@
 from src.address_book import AddressBook
 from prettytable import PrettyTable
+from prompt_toolkit import PromptSession
+from prompt_toolkit.completion import WordCompleter
 from src.commands import (
     add_birthday,
     add_contact,
@@ -23,6 +25,29 @@ def parse_input(user_input):
 
 
 def main():
+    commands = [
+        "add_contact",
+        "remove_contact",
+        "all_contacts",
+        "change_phone",
+        "add_phone",
+        "remove_phone",
+        "add_birthday",
+        "add_email",
+        "edit_email",
+        "find_contact",
+        "show_phones",
+        "show_birthday",
+        "birthdays",
+        "add_note",
+        "edit_note",
+        "remove_note",
+        "find_note",
+        "all_notes",
+    ]
+    completer = WordCompleter(commands, ignore_case=True)
+    session = PromptSession()
+
     book = AddressBook()
     print("Welcome to the assistant bot!\n")
     print("Address book commands description:\n")
@@ -61,7 +86,7 @@ def main():
     print(noteBookCommndsDescription)
     print("\n")
     while True:
-        user_input = input("Enter a command: ")
+        user_input = session.prompt("Enter a command: ", completer=completer)
         command, *args = parse_input(user_input)
 
         if command in ["close", "exit"]:
