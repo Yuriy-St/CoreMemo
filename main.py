@@ -1,4 +1,5 @@
 from src.address_book import AddressBook
+from prettytable import PrettyTable
 from src.commands import (
     add_birthday,
     add_contact,
@@ -23,7 +24,42 @@ def parse_input(user_input):
 
 def main():
     book = AddressBook()
-    print("Welcome to the assistant bot!")
+    print("Welcome to the assistant bot!\n")
+    print("Address book commands description:\n")
+    addressBookCommndsDescription = PrettyTable()
+    addressBookCommndsDescription.field_names = ["Command", "Description"]
+    addressBookCommndsDescription.add_rows(
+        [
+            ["add_contact", "Add new contact"],
+            ["change_phone", "Change phone number"],
+            ["add_phone", "Add phone number"],
+            ["remove_phone", "Remove phone number"],
+            ["add_birthday", "Add birthday"],
+            ["add_email", "Add email"],
+            ["edit_email", "Edit email"],
+            ["find_contact", "Find contact"],
+            ["remove_contact", "Remove contact"],
+            ["show_phones", "Show all contact phones"],
+            ["show_birthday", "Show contact birthday"],
+            ["birthdays", "Show all birthdays from particular count of days"],
+            ["all_contacts", "Show all contacts"],
+        ]
+    )
+    print(addressBookCommndsDescription)
+    print("\nNote book commands description:\n")
+    noteBookCommndsDescription = PrettyTable()
+    noteBookCommndsDescription.field_names = ["Command", "Description"]
+    noteBookCommndsDescription.add_rows(
+        [
+            ["add_note", "Add new note"],
+            ["edit_note", "Edit note"],
+            ["remove_note", "Remove note"],
+            ["find_note", "Find note"],
+            ["all_notes", "Show all notes"],
+        ]
+    )
+    print(noteBookCommndsDescription)
+    print("\n")
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
@@ -51,7 +87,7 @@ def main():
             print(find_contact(args, book))
         elif command == "remove_contact":
             print(remove_contact(args, book))
-        elif command == "phones":
+        elif command == "show_phones":
             print(show_phones(args, book))
         elif command == "show_birthday":
             print(show_birthday(args, book))

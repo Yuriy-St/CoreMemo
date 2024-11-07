@@ -1,4 +1,5 @@
 from .decorators import input_error
+from prettytable import PrettyTable
 from .address_book import AddressBook
 from .record import Record
 
@@ -55,9 +56,17 @@ def add_phone(args, book: AddressBook):
 @input_error
 def all_contacts(book: AddressBook):
     if len(book.data):
+        table = PrettyTable()
+        table.field_names = ["Contact name", "Email", "Birthday", "Phones"]
         print("Contacts:")
         for record in book.data.values():
-            print(record)
+            table.add_row([
+                record.name.value,
+                "" if record.email is None else record.email.value,
+                "" if record.birthday is None else record.birthday.value,
+                '; '.join(p.value for p in record.phones)
+            ])
+        print(table)
     else:
         print("Empty list")
 
