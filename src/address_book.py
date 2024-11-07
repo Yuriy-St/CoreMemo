@@ -1,7 +1,7 @@
 from collections import UserDict
 from datetime import datetime, timedelta
 
-from constants import DATE_FORMAT
+from .constants import DATE_FORMAT
 
 from .record import Record
 
