@@ -1,6 +1,6 @@
 from typing import Callable
 
-from custom_exceptions import InputException, RecordNotFountException
+from .custom_exceptions import InputException, RecordNotFountException
 
 
 # TODO: to be updated for each exception type

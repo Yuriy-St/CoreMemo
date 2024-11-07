@@ -1,7 +1,7 @@
-import constants
-from field import Field
+from .constants import DATE_FORMAT
+from .field import Field
 from datetime import datetime
-from custom_exceptions import InputException
+from .custom_exceptions import InputException
 
 
 class Birthday(Field):
@@ -9,15 +9,11 @@ class Birthday(Field):
         super().__init__(self.__convert_to_datetime(value))
 
     def __str__(self):
-        return self.value.strftime("%d.%m.%Y")
+        return self.value.strftime(DATE_FORMAT)
 
     def __convert_to_datetime(self, value):
         try:
-
-            if not constants.DATE_REGEXP.match(value):
-                raise InputException
-
-            date = datetime.strptime(value, '%d.%m.%Y')
+            date = datetime.strptime(value, DATE_FORMAT)
 
             return date
         except InputException:
