@@ -66,15 +66,7 @@ class Record:
     def remove_email(self):
         self.email = None
 
-    # @input_error
-    def coming_birthdays(args, book):
-        days = int(args) 
-        upcoming_birthdays = book.get_upcoming_birthdays(days)
-        if  upcoming_birthdays:
-            return "\n".join([f"{name}: {date}" for name, date in upcoming_birthdays])
-        else:
-            return "No birthdays within the upcoming days."
-        
+  
 
     def __str__(self):
         return f"Contact name: {self.name.value}, email: {self.email}, birthday: {self.birthday}, phones: {'; '.join(p.value for p in self.phones)}"

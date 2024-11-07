@@ -161,6 +161,16 @@ def show_birthday(args, book: AddressBook):
 
     return f"Birthday: {record.birthday}"
 
+# @input_error
+def coming_birthdays(args, book):
+    days = int(args) 
+    upcoming_birthdays = book.get_upcoming_birthdays(days)
+    if  upcoming_birthdays:
+        return "\n".join([f"{name}: {date}" for name, date in upcoming_birthdays])
+    else:
+        return "No birthdays within the upcoming days."
+        
+
 
 @input_error
 def show_phones(args, book: AddressBook):
@@ -172,3 +182,5 @@ def show_phones(args, book: AddressBook):
     record = book.find(name)
 
     return f"Phones: {'; '.join(p.value for p in record.get_all_phones())}"
+
+
