@@ -161,9 +161,9 @@ def show_birthday(args, book: AddressBook):
 
     return f"Birthday: {record.birthday}"
 
-# @input_error
+@input_error
 def coming_birthdays(args, book):
-    days = int(args) 
+    days = int(args[0]) 
     upcoming_birthdays = book.get_upcoming_birthdays(days)
     if  upcoming_birthdays:
         return "\n".join([f"{name}: {date}" for name, date in upcoming_birthdays])
