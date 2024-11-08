@@ -220,16 +220,30 @@ def add_note(args, notes: Notes):
 
     title, description = args
 
-    notes.add(Note(title, description))
+    note_id = notes.add(Note(title, description))
 
-    return "Note added."
+    return f"Note added with id: {note_id}"
+
+
+def print_notes(notes: dict[int, Note], title: str = "Notes:"):
+    fields = ["ID", "Title", "Description", "Tags"]
+    rows = []
+    for record in notes:
+        rows.append(
+            [
+                record,
+                notes[record].title,
+                notes[record].description,
+                "; ".join([tag.value for tag in notes[record].tags]),
+            ]
+        )
+    print_table(title, fields, rows)
 
 
 @input_error
 def all_notes(notes: Notes):
     if len(notes.data):
-        print("Notes:")
-        print(notes)
+        print_notes(notes.data)
     else:
         print("Empty list")
 
@@ -286,30 +300,66 @@ def remove_note(args, notes: Notes):
 
 
 @input_error
-def find_notes_by_title(args, notes: Notes):
+def find_notes_by_text(args, notes: Notes):
     if len(args) != 1:
         raise ValueError("Invalid count of arguments.")
 
     (title,) = args
 
-    notes = notes.search_by_title(title)
+    notes = notes.search_by_text(title)
 
     if len(notes) == 0:
-        return "Note not found."
+        return "Notes not found."
 
-    return Notes.notes_with_id(notes)
+    print_notes(notes)
 
 
 @input_error
-def find_notes_by_description(args, notes: Notes):
+def add_note_tag(args, notes: Notes):
+    if len(args) == 0:
+        raise ValueError("Give me id and tag please.")
+
+    if len(args) != 2:
+        raise ValueError("Invalid count of arguments.")
+
+    id, tag = args
+
+    if not id.isdigit():
+        raise ValueError("Invalid id.")
+
+    notes.add_note_tag(int(id), tag)
+
+    return "Tag added."
+
+
+@input_error
+def remove_note_tag(args, notes: Notes):
+    if len(args) == 0:
+        raise ValueError("Give me id and tag please.")
+
+    if len(args) != 2:
+        raise ValueError("Invalid count of arguments.")
+
+    id, tag = args
+
+    if not id.isdigit():
+        raise ValueError("Invalid id.")
+
+    notes.remove_note_tag(int(id), tag)
+
+    return "Tag removed."
+
+
+@input_error
+def find_notes_by_tag(args, notes: Notes):
     if len(args) != 1:
         raise ValueError("Invalid count of arguments.")
 
-    (description,) = args
+    (tag,) = args
 
-    notes = notes.search_by_description(description)
+    notes = notes.search_by_tag(tag)
 
     if len(notes) == 0:
-        return "Note not found."
+        return "Notes not found."
 
-    return Notes.notes_with_id(notes)
+    print_notes(notes)

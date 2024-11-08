@@ -2,6 +2,7 @@ from collections import UserDict
 from .note import Note
 from .title import Title
 from .description import Description
+from .tag import Tag
 from .custom_exceptions import RecordNotFountException
 
 
@@ -23,22 +24,44 @@ class Notes(UserDict[int, Note]):
     def __str__(self) -> str:
         return self.notes_with_id(self.data)
 
-    def add(self, value: Note):
-        self.data[self.id] = value
+    def add(self, value: Note) -> int:
+        note_id = self.id
+        self.data[note_id] = value
         self.id += 1
+        return note_id
 
-    def _search_by(self, key: str, query: str) -> dict[int, Note]:
-        return {
-            id: note
-            for id, note in self.data.items()
-            if getattr(note, key).value.lower().find(query.lower()) != -1
-        }
+    def add_note_tag(self, id: int, tag: str):
+        if not self._note_exists(id):
+            raise RecordNotFountException("Note with this id does not exist")
 
-    def search_by_title(self, title: str) -> dict[int, Note]:
-        return self._search_by("title", title)
+        self.data[id].add_tag(tag)
+        
+    def remove_note_tag(self, id: int, tag: str):
+        if not self._note_exists(id):
+            raise RecordNotFountException("Note with this id does not exist")
 
-    def search_by_description(self, description: str) -> dict[int, Note]:
-        return self._search_by("description", description)
+        self.data[id].remove_tag(tag)
+
+    def search_by_text(self, query: str) -> dict[int, Note]:
+        SEARCHABLE_NOTE_TEXT_FIELDS = ["title", "description"]
+
+        result = {}
+        for id, note in self.data.items():
+            for field in SEARCHABLE_NOTE_TEXT_FIELDS:
+                if getattr(note, field).value.lower().find(query.lower()) != -1:
+                    result[id] = note
+                    break
+                
+        return result
+
+    def search_by_tag(self, tag: str) -> dict[int, Note]:
+        tag = Tag(tag)
+        result = {}
+        for id, note in self.data.items():
+            if tag in note.tags:
+                result[id] = note
+
+        return result
 
     def update_title(self, id: int, title: str):
         if not self._note_exists(id):
@@ -57,27 +80,3 @@ class Notes(UserDict[int, Note]):
             raise RecordNotFountException("Note with this id does not exist")
 
         del self.data[id]
-
-
-if __name__ == "__main__":
-    notes = Notes()
-
-    dictActions = [
-        {"method": notes.add, "values": [Note("Title 1", "Description 1")]},
-        {"method": notes.add, "values": [Note("Title 2", "Description 2")]},
-        {"method": notes.add, "values": [Note("Title 3", "Description 3")]},
-        {"method": notes.remove, "values": [1]},
-        {"method": notes.update_title, "values": [2, "New title"]},
-        {"method": notes.update_description, "values": [2, "New description"]},
-        {"method": notes.search_by_title, "values": ["New title"]},
-        {"method": notes.search_by_description, "values": ["New description"]},
-    ]
-
-    for item in dictActions:
-        try:
-            values = item["values"]
-            item["method"].__call__(*values)
-
-            print(notes, "\n")
-        except Exception as e:
-            print(f"Values: {values}, error: {e}")
