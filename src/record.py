@@ -8,7 +8,7 @@ from .custom_exceptions import InputException
 class Record:
     def __init__(self, name):
         self.name = Name(name)
-        self.phones = []
+        self.phones: list = []
         self.birthday = None
         self.email = None
 

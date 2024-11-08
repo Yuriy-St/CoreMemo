@@ -1,5 +1,5 @@
 from src.address_book import AddressBook
-from prettytable import PrettyTable
+from table import addressbook_commands, notebook_commands
 from src.commands import (
     add_birthday,
     add_contact,
@@ -24,42 +24,10 @@ def parse_input(user_input):
 
 def main():
     book = AddressBook()
-    print("Welcome to the assistant bot!\n")
-    print("Address book commands description:\n")
-    addressBookCommndsDescription = PrettyTable()
-    addressBookCommndsDescription.field_names = ["Command", "Description"]
-    addressBookCommndsDescription.add_rows(
-        [
-            ["add_contact", "Add new contact"],
-            ["change_phone", "Change phone number"],
-            ["add_phone", "Add phone number"],
-            ["remove_phone", "Remove phone number"],
-            ["add_birthday", "Add birthday"],
-            ["add_email", "Add email"],
-            ["edit_email", "Edit email"],
-            ["find_contact", "Find contact"],
-            ["remove_contact", "Remove contact"],
-            ["show_phones", "Show all contact phones"],
-            ["show_birthday", "Show contact birthday"],
-            ["birthdays", "Show all birthdays from particular count of days"],
-            ["all_contacts", "Show all contacts"],
-        ]
-    )
-    print(addressBookCommndsDescription)
-    print("\nNote book commands description:\n")
-    noteBookCommndsDescription = PrettyTable()
-    noteBookCommndsDescription.field_names = ["Command", "Description"]
-    noteBookCommndsDescription.add_rows(
-        [
-            ["add_note", "Add new note"],
-            ["edit_note", "Edit note"],
-            ["remove_note", "Remove note"],
-            ["find_note", "Find note"],
-            ["all_notes", "Show all notes"],
-        ]
-    )
-    print(noteBookCommndsDescription)
-    print("\n")
+    print("\nWelcome to the assistant bot!\n")
+    addressbook_commands()
+    notebook_commands()
+
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
@@ -69,6 +37,10 @@ def main():
             break
         elif command == "hello":
             print("How can I help you?")
+        elif command == "addressbook_commands":
+            addressbook_commands()
+        elif command == "notebook_commands":
+            notebook_commands()
         elif command == "add_contact":
             print(add_contact(args, book))
         elif command == "change_phone":
