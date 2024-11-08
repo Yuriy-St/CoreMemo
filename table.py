@@ -41,10 +41,14 @@ def notebook_commands():
     fields = ["Command", "Description"]
     rows = [
         ["add_note", "Add new note"],
+        ["add_note_tag", "Add note tag"],
         ["all_notes", "Show all notes"],
-        ["edit_note", "Edit note"],
-        ["find_note", "Find note"],
+        ["edit_note_title", "Edit note title"],
+        ["edit_note_description", "Edit note description"],
+        ["find_notes_by_text", "Find notes by text"],
+        ["find_notes_by_tag", "Find notes by tag"],
         ["remove_note", "Remove note"],
+        ["remove_note_tag", "Remove note tag"],
     ]
     print_table(title, fields, rows)
     print("\n")

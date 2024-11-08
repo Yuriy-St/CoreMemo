@@ -19,11 +19,13 @@ from src.commands import (
     show_phones,
     add_note,
     all_notes,
-    find_notes_by_title,
-    find_notes_by_description,
+    find_notes_by_text,
     edit_note_description,
     edit_note_title,
     remove_note,
+    add_note_tag,
+    remove_note_tag,
+    find_notes_by_tag
 )
 
 
@@ -40,6 +42,7 @@ def main():
         "add_contact",
         "add_email",
         "add_note",
+        "add_note_tag",
         "add_phone",
         "all_contacts",
         "all_notes",
@@ -47,12 +50,15 @@ def main():
         "change_phone",
         "close",
         "edit_email",
-        "edit_note",
+        "edit_note_description",
+        "edit_note_title",
         "exit",
         "find_contact",
-        "find_note",
+        "find_notes_by_tag",
+        "find_notes_by_text",
         "remove_contact",
         "remove_note",
+        "remove_note_tag",
         "remove_phone",
         "show_birthday",
         "show_phones",
@@ -112,10 +118,14 @@ def main():
             print(edit_note_description(args, notes))
         elif command == "remove_note":
             print(remove_note(args, notes))
-        elif command == "find_notes_by_title":
-            print(find_notes_by_title(args, notes))
-        elif command == "find_notes_by_description":
-            print(find_notes_by_description(args, notes))
+        elif command == "find_notes_by_tag":
+            find_notes_by_tag(args, notes)
+        elif command == "find_notes_by_text":
+            find_notes_by_text(args, notes)
+        elif command == "add_note_tag":
+            print(add_note_tag(args, notes))
+        elif command == "remove_note_tag":
+            print(remove_note_tag(args, notes))
         elif command == "all_notes":
             all_notes(notes)
 
