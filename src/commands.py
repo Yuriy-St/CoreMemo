@@ -183,6 +183,22 @@ def show_birthday(args, book: AddressBook):
 
 
 @input_error
+def coming_birthdays(args, book):
+    if len(args) == 0:
+        raise ValueError("Give me numbers of days.")
+
+    if len(args) != 1:
+        raise ValueError("Invalid count of arguments.")
+
+    days = int(args[0])
+    upcoming_birthdays = book.get_upcoming_birthdays(days)
+    if upcoming_birthdays:
+        return "\n".join([f"{name}: {date}" for name, date in upcoming_birthdays])
+    else:
+        return f"No birthdays within the {days} days."
+
+
+@input_error
 def show_phones(args, book: AddressBook):
     if len(args) != 1:
         raise ValueError("Invalid count of arguments.")
