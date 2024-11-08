@@ -64,3 +64,5 @@ class AddressBook(UserDict[str, Record]):
                     # Додаємо до списку тільки якщо congratulation_date було встановлено   
                     upcoming_birthdays.append((record.name.value, congratulation_date.strftime(DATE_FORMAT))) 
         return upcoming_birthdays
+    
+
