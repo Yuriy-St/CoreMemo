@@ -1,5 +1,7 @@
+import shlex
 from src.address_book import AddressBook
 from prettytable import PrettyTable
+from src.notes import Notes
 from src.commands import (
     add_birthday,
     add_contact,
@@ -13,17 +15,27 @@ from src.commands import (
     remove_phone,
     show_birthday,
     show_phones,
+    add_note,
+    all_notes,
+    find_notes_by_title,
+    find_notes_by_description,
+    edit_note_description,
+    edit_note_title,
+    remove_note,
 )
 
 
 def parse_input(user_input):
-    cmd, *args = user_input.split()
+    tokens = shlex.split(user_input)
+    cmd, *args = tokens
     cmd = cmd.strip().lower()
     return cmd, *args
 
 
 def main():
     book = AddressBook()
+    notes = Notes()
+    print("Welcome to the assistant bot!")
     print("Welcome to the assistant bot!\n")
     print("Address book commands description:\n")
     addressBookCommndsDescription = PrettyTable()
@@ -96,15 +108,19 @@ def main():
         elif command == "all_contacts":
             all_contacts(book)
         elif command == "add_note":
-            pass
-        elif command == "edit_note":
-            pass
+            print(add_note(args, notes))
+        elif command == "edit_note_title":
+            print(edit_note_title(args, notes))
+        elif command == "edit_note_description":
+            print(edit_note_description(args, notes))
         elif command == "remove_note":
-            pass
-        elif command == "find_note":
-            pass
+            print(remove_note(args, notes))
+        elif command == "find_notes_by_title":
+            print(find_notes_by_title(args, notes))
+        elif command == "find_notes_by_description":
+            print(find_notes_by_description(args, notes))
         elif command == "all_notes":
-            pass
+            all_notes(notes)
 
         else:
             print("Invalid command.")
