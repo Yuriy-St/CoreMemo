@@ -1,5 +1,7 @@
 from .decorators import input_error
 from .address_book import AddressBook
+from .notes import Notes
+from .note import Note
 from .record import Record
 
 
@@ -172,3 +174,108 @@ def show_phones(args, book: AddressBook):
     record = book.find(name)
 
     return f"Phones: {'; '.join(p.value for p in record.get_all_phones())}"
+
+
+@input_error
+def add_note(args, notes: Notes):
+    if len(args) == 0:
+        raise ValueError("Give me title and description please.")
+
+    if len(args) != 2:
+        raise ValueError("Invalid count of arguments.")
+
+    title, description = args
+
+    notes.add(Note(title, description))
+
+    return "Note added."
+
+
+@input_error
+def all_notes(notes: Notes):
+    if len(notes.data):
+        print("Notes:")
+        print(notes)
+    else:
+        print("Empty list")
+
+
+@input_error
+def edit_note_title(args, notes: Notes):
+    if len(args) == 0:
+        raise ValueError("Give me id and title please.")
+
+    if len(args) != 2:
+        raise ValueError("Invalid count of arguments.")
+
+    id, title = args
+
+    if not id.isdigit():
+        raise ValueError("Invalid id.")
+
+    notes.update_title(int(id), title)
+
+    return "Title updated."
+
+
+@input_error
+def edit_note_description(args, notes: Notes):
+    if len(args) == 0:
+        raise ValueError("Give me id and description please.")
+
+    if len(args) != 2:
+        raise ValueError("Invalid count of arguments.")
+
+    id, description = args
+
+    if not id.isdigit():
+        raise ValueError("Invalid id.")
+
+    notes.update_description(int(id), description)
+
+    return "Description updated."
+
+
+@input_error
+def remove_note(args, notes: Notes):
+    if len(args) != 1:
+        raise ValueError("Invalid count of arguments.")
+
+    (id,) = args
+
+    if not id.isdigit():
+        raise ValueError("Invalid id.")
+
+    notes.remove(int(id))
+
+    return "Note removed."
+
+
+@input_error
+def find_notes_by_title(args, notes: Notes):
+    if len(args) != 1:
+        raise ValueError("Invalid count of arguments.")
+
+    (title,) = args
+
+    notes = notes.search_by_title(title)
+
+    if len(notes) == 0:
+        return "Note not found."
+
+    return Notes.notes_with_id(notes)
+
+
+@input_error
+def find_notes_by_description(args, notes: Notes):
+    if len(args) != 1:
+        raise ValueError("Invalid count of arguments.")
+
+    (description,) = args
+
+    notes = notes.search_by_description(description)
+
+    if len(notes) == 0:
+        return "Note not found."
+
+    return Notes.notes_with_id(notes)
