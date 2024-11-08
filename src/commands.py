@@ -1,4 +1,5 @@
 from .decorators import input_error
+from table import print_table
 from .address_book import AddressBook
 from .notes import Notes
 from .note import Note
@@ -57,9 +58,19 @@ def add_phone(args, book: AddressBook):
 @input_error
 def all_contacts(book: AddressBook):
     if len(book.data):
-        print("Contacts:")
+        title = "Contacts:"
+        fields = ["Contact name", "Email", "Birthday", "Phones"]
+        rows = []
         for record in book.data.values():
-            print(record)
+            rows.append(
+                [
+                    record.name.value,
+                    "" if record.email is None else record.email.value,
+                    "" if record.birthday is None else record.birthday.value,
+                    "\n".join(p.value for p in record.phones),
+                ]
+            )
+        print_table(title, fields, rows)
     else:
         print("Empty list")
 

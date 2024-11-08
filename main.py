@@ -1,5 +1,6 @@
 import shlex
 from src.address_book import AddressBook
+from table import addressbook_commands, notebook_commands
 from src.notes import Notes
 from src.commands import (
     add_birthday,
@@ -33,8 +34,10 @@ def parse_input(user_input):
 
 def main():
     book = AddressBook()
+    print("\nWelcome to the assistant bot!\n")
+    addressbook_commands()
+    notebook_commands()
     notes = Notes()
-    print("Welcome to the assistant bot!")
     while True:
         user_input = input("Enter a command: ")
         command, *args = parse_input(user_input)
@@ -44,6 +47,10 @@ def main():
             break
         elif command == "hello":
             print("How can I help you?")
+        elif command == "addressbook_commands":
+            addressbook_commands()
+        elif command == "notebook_commands":
+            notebook_commands()
         elif command == "add_contact":
             print(add_contact(args, book))
         elif command == "change_phone":
@@ -62,7 +69,7 @@ def main():
             print(find_contact(args, book))
         elif command == "remove_contact":
             print(remove_contact(args, book))
-        elif command == "phones":
+        elif command == "show_phones":
             print(show_phones(args, book))
         elif command == "show_birthday":
             print(show_birthday(args, book))
