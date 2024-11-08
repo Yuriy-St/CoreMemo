@@ -175,7 +175,7 @@ def show_phones(args, book: AddressBook):
 
     return f"Phones: {'; '.join(p.value for p in record.get_all_phones())}"
 
-    
+
 @input_error
 def add_note(args, notes: Notes):
     if len(args) == 0:
@@ -187,7 +187,7 @@ def add_note(args, notes: Notes):
     title, description = args
 
     notes.add(Note(title, description))
-    
+
     return "Note added."
 
 
@@ -214,7 +214,7 @@ def edit_note_title(args, notes: Notes):
         raise ValueError("Invalid id.")
 
     notes.update_title(int(id), title)
-    
+
     return "Title updated."
 
 
@@ -232,7 +232,7 @@ def edit_note_description(args, notes: Notes):
         raise ValueError("Invalid id.")
 
     notes.update_description(int(id), description)
-    
+
     return "Description updated."
 
 
