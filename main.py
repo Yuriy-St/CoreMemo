@@ -1,3 +1,4 @@
+import shlex
 from src.address_book import AddressBook
 from src.notes import Notes
 from src.commands import (
@@ -24,7 +25,8 @@ from src.commands import (
 
 
 def parse_input(user_input):
-    cmd, *args = user_input.split()
+    tokens = shlex.split(user_input)
+    cmd, *args = tokens
     cmd = cmd.strip().lower()
     return cmd, *args
 
