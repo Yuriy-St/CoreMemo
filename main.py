@@ -1,6 +1,8 @@
 import shlex
 from src.address_book import AddressBook
 from table import addressbook_commands, notebook_commands
+from prompt_toolkit import PromptSession
+from prompt_toolkit.completion import WordCompleter
 from src.notes import Notes
 from src.commands import (
     add_birthday,
@@ -33,13 +35,36 @@ def parse_input(user_input):
 
 
 def main():
+    commands = [
+        "add_contact",
+        "remove_contact",
+        "all_contacts",
+        "change_phone",
+        "add_phone",
+        "remove_phone",
+        "add_birthday",
+        "add_email",
+        "edit_email",
+        "find_contact",
+        "show_phones",
+        "show_birthday",
+        "birthdays",
+        "add_note",
+        "edit_note",
+        "remove_note",
+        "find_note",
+        "all_notes",
+    ]
+    completer = WordCompleter(commands, ignore_case=True)
+    session = PromptSession()
+
     book = AddressBook()
     print("\nWelcome to the assistant bot!\n")
     addressbook_commands()
     notebook_commands()
     notes = Notes()
     while True:
-        user_input = input("Enter a command: ")
+        user_input = session.prompt("Enter a command: ", completer=completer)
         command, *args = parse_input(user_input)
 
         if command in ["close", "exit"]:
