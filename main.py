@@ -11,6 +11,7 @@ from src.commands import (
     add_phone,
     all_contacts,
     change_phone,
+    coming_birthdays,
     edit_email,
     find_contact,
     remove_contact,
@@ -67,6 +68,9 @@ def main():
     session = PromptSession()
 
     book = AddressBook()
+    print("Loading addressbook data....")
+    book.load_data()
+
     print("\nWelcome to the assistant bot!\n")
     addressbook_commands()
     notebook_commands()
@@ -107,7 +111,7 @@ def main():
         elif command == "show_birthday":
             print(show_birthday(args, book))
         elif command == "birthdays":
-            pass
+            print(coming_birthdays(args, book))
         elif command == "all_contacts":
             all_contacts(book)
         elif command == "add_note":

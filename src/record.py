@@ -66,6 +66,8 @@ class Record:
     def remove_email(self):
         self.email = None
 
+  
+
     def __str__(self):
         return f"Contact name: {self.name.value}, email: {self.email}, birthday: {self.birthday}, phones: {'; '.join(p.value for p in self.phones)}"
 
