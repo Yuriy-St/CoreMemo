@@ -33,21 +33,19 @@ class AddressBook(UserDict[str, Record]):
 
         del self.data[name]
 
+
     def get_upcoming_birthdays(self, days):
-        current_date = datetime.today().date()
+        current_date = datetime.today().date()  # Це тип date
         upcoming_birthdays = []
 
         for record in self.data.values():
             if record.birthday:
-                birthday_this_year = record.birthday.value.replace(
-                    year=current_date.year
-                )
+                # Перетворюємо на date, щоб уникнути помилки порівняння
+                birthday_this_year = record.birthday.value.replace(year=current_date.year).date()
 
-                # Якщо день народження вже пройшов, беремо наступний рік
+                # Якщо день народження вже пройшов цього року, беремо наступний рік
                 if birthday_this_year < current_date:
-                    birthday_this_year = birthday_this_year.replace(
-                        year=current_date.year + 1
-                    )
+                    birthday_this_year = birthday_this_year.replace(year=current_date.year + 1)
 
                 # Різниця в днях між поточною датою і днем народження
                 difference_days = (birthday_this_year - current_date).days
@@ -59,17 +57,18 @@ class AddressBook(UserDict[str, Record]):
                 if 0 <= difference_days <= days:
                     congratulation_date = birthday_this_year
 
-                    # Якщо день народження випадає на вихідні (субота або неділя)
+                    # Якщо день народження випадає на вихідні
                     if congratulation_date.weekday() == 5:  # Субота
                         congratulation_date += timedelta(days=2)
                     elif congratulation_date.weekday() == 6:  # Неділя
                         congratulation_date += timedelta(days=1)
 
-                    # Додаємо до списку тільки якщо congratulation_date було встановлено
+                    # Додаємо до списку
                     upcoming_birthdays.append(
                         (record.name.value, congratulation_date.strftime(DATE_FORMAT))
                     )
         return upcoming_birthdays
+    
 
     def __is_contact_exists(self, key) -> bool:
         return key in self.data
