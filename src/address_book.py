@@ -1,4 +1,7 @@
+import pickle
+
 from collections import UserDict
+from pathlib import Path
 from datetime import datetime, timedelta
 
 from .constants import DATE_FORMAT
@@ -10,6 +13,10 @@ from .custom_exceptions import RecordNotFountException
 
 
 class AddressBook(UserDict[str, Record]):
+    def __init__(self, filename: str = "./data/addressbook.dat"):
+        super().__init__()
+        self.filepath = Path(filename)
+
     def add_record(self, record: Record):
         if not record:
             raise InputException("Invalid data")
@@ -69,6 +76,17 @@ class AddressBook(UserDict[str, Record]):
                     )
         return upcoming_birthdays
     
+
+    def save_data(self):
+        with self.filepath.open("wb") as file:
+            pickle.dump(self, file)
+
+    def load_data(self):
+        try:
+            with self.filepath.open("rb") as file:
+                self.data = pickle.load(file)
+        except FileNotFoundError:
+            self.data = {}
 
     def __is_contact_exists(self, key) -> bool:
         return key in self.data

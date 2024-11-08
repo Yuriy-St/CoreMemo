@@ -19,7 +19,7 @@ def add_contact(args, book: AddressBook):
     john_record = Record(name)
     john_record.add_phone(phone)
     book.add_record(john_record)
-
+    book.save_data()
     return "Contact added."
 
 
@@ -35,6 +35,7 @@ def change_phone(args, book: AddressBook):
 
     record = book.find(name)
     record.edit_phone(old_phone, new_phone)
+    book.save_data()
 
     return "Phone changed."
 
@@ -51,6 +52,7 @@ def add_phone(args, book: AddressBook):
 
     record = book.find(name)
     record.add_phone(phone)
+    book.save_data()
 
     return "Phone added."
 
@@ -87,6 +89,7 @@ def remove_phone(args, book: AddressBook):
 
     record = book.find(name)
     record.remove_phone(phone)
+    book.save_data()
 
     return "Phone removed."
 
@@ -103,6 +106,7 @@ def add_birthday(args, book: AddressBook):
 
     record = book.find(name)
     record.add_birthday(birthday)
+    book.save_data()
 
     return "Birthday added."
 
@@ -119,6 +123,7 @@ def add_email(args, book: AddressBook):
 
     record = book.find(name)
     record.add_email(email)
+    book.save_data()
 
     return "Email added."
 
@@ -135,6 +140,7 @@ def edit_email(args, book: AddressBook):
 
     record = book.find(name)
     record.edit_email(email)
+    book.save_data()
 
     return "Email added."
 
@@ -159,6 +165,7 @@ def remove_contact(args, book: AddressBook):
     (name,) = args
 
     book.remove(name)
+    book.save_data()
 
     return "Contact removed."
 

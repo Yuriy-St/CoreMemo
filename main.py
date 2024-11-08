@@ -62,6 +62,9 @@ def main():
     session = PromptSession()
 
     book = AddressBook()
+    print("Loading addressbook data....")
+    book.load_data()
+
     print("\nWelcome to the assistant bot!\n")
     addressbook_commands()
     notebook_commands()
