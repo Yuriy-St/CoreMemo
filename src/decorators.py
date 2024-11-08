@@ -16,5 +16,7 @@ def input_error(func: Callable) -> Callable:
             return f"{e}"
         except IndexError as e:
             return f"{e}"
+        except Exception as e:
+            return f"{e}"
 
     return inner
