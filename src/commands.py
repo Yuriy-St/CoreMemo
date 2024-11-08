@@ -1,5 +1,5 @@
 from .decorators import input_error
-from table import print_table
+from .table import print_table
 from .address_book import AddressBook
 from .notes import Notes
 from .note import Note

@@ -1,6 +1,6 @@
 import shlex
 from src.address_book import AddressBook
-from table import addressbook_commands, notebook_commands
+from src.table import addressbook_commands, notebook_commands
 from prompt_toolkit import PromptSession
 from prompt_toolkit.completion import WordCompleter
 from src.notes import Notes
