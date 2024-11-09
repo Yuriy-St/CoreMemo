@@ -221,6 +221,7 @@ def add_note(args, notes: Notes):
     title, description = args
 
     note_id = notes.add(Note(title, description))
+    notes.save_data()
 
     return f"Note added with id: {note_id}"
 
@@ -295,6 +296,7 @@ def remove_note(args, notes: Notes):
         raise ValueError("Invalid id.")
 
     notes.remove(int(id))
+    notes.save_data()
 
     return "Note removed."
 
@@ -346,6 +348,7 @@ def remove_note_tag(args, notes: Notes):
         raise ValueError("Invalid id.")
 
     notes.remove_note_tag(int(id), tag)
+    notes.save_data()
 
     return "Tag removed."
 
