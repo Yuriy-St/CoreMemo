@@ -12,7 +12,7 @@ def add_contact(args, book: AddressBook):
         raise ValueError("Give me name and phone please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     name, phone = args
 
@@ -29,7 +29,7 @@ def change_phone(args, book: AddressBook):
         raise ValueError("Give me name and phones please.")
 
     if len(args) != 3:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     name, old_phone, new_phone = args
 
@@ -46,7 +46,7 @@ def add_phone(args, book: AddressBook):
         raise ValueError("Give me name and phone please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     name, phone = args
 
@@ -83,7 +83,7 @@ def remove_phone(args, book: AddressBook):
         raise ValueError("Give me name and phone please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     name, phone = args
 
@@ -100,7 +100,7 @@ def add_birthday(args, book: AddressBook):
         raise ValueError("Give me name and birthday please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     name, birthday = args
 
@@ -117,7 +117,7 @@ def add_email(args, book: AddressBook):
         raise ValueError("Give me name and email please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     name, email = args
 
@@ -134,7 +134,7 @@ def edit_email(args, book: AddressBook):
         raise ValueError("Give me name and email please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     name, email = args
 
@@ -147,9 +147,6 @@ def edit_email(args, book: AddressBook):
 
 @input_error
 def find_contact(args, book: AddressBook):
-    if len(args) != 1:
-        raise ValueError("Invalid count of arguments.")
-
     (name,) = args
 
     record = book.find(name)
@@ -159,9 +156,6 @@ def find_contact(args, book: AddressBook):
 
 @input_error
 def remove_contact(args, book: AddressBook):
-    if len(args) != 1:
-        raise ValueError("Invalid count of arguments.")
-
     (name,) = args
 
     book.remove(name)
@@ -172,14 +166,14 @@ def remove_contact(args, book: AddressBook):
 
 @input_error
 def show_birthday(args, book: AddressBook):
-    if len(args) != 1:
-        raise ValueError("Invalid count of arguments.")
-
     (name,) = args
 
     record = book.find(name)
-
-    return f"Birthday: {record.birthday}"
+    print_table(
+        title="",
+        fields=["Contact name", "Birthday"],
+        rows=[[str(record.name), str(record.birthday)]],
+    )
 
 
 @input_error
@@ -188,7 +182,7 @@ def coming_birthdays(args, book):
         raise ValueError("Give me numbers of days.")
 
     if len(args) != 1:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     days = int(args[0])
     upcoming_birthdays = book.get_upcoming_birthdays(days)
@@ -200,14 +194,19 @@ def coming_birthdays(args, book):
 
 @input_error
 def show_phones(args, book: AddressBook):
-    if len(args) != 1:
-        raise ValueError("Invalid count of arguments.")
-
     (name,) = args
 
     record = book.find(name)
-
-    return f"Phones: {'; '.join(p.value for p in record.get_all_phones())}"
+    print_table(
+        title="",
+        fields=["Contact name", "Phones"],
+        rows=[
+            [
+                str(record.name),
+                f"{'\n'.join(str(phone) for phone in record.get_all_phones())}",
+            ]
+        ],
+    )
 
 
 @input_error
@@ -216,7 +215,7 @@ def add_note(args, notes: Notes):
         raise ValueError("Give me title and description please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     title, description = args
 
@@ -255,7 +254,7 @@ def edit_note_title(args, notes: Notes):
         raise ValueError("Give me id and title please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     id, title = args
 
@@ -273,7 +272,7 @@ def edit_note_description(args, notes: Notes):
         raise ValueError("Give me id and description please.")
 
     if len(args) != 2:
-        raise ValueError("Invalid count of arguments.")
+        raise IndexError
 
     id, description = args
 
@@ -287,9 +286,6 @@ def edit_note_description(args, notes: Notes):
 
 @input_error
 def remove_note(args, notes: Notes):
-    if len(args) != 1:
-        raise ValueError("Invalid count of arguments.")
-
     (id,) = args
 
     if not id.isdigit():
@@ -303,17 +299,14 @@ def remove_note(args, notes: Notes):
 
 @input_error
 def find_notes_by_text(args, notes: Notes):
-    if len(args) != 1:
-        raise ValueError("Invalid count of arguments.")
-
     (title,) = args
 
-    notes = notes.search_by_text(title)
+    result = notes.search_by_text(title)
 
-    if len(notes) == 0:
+    if not len(result):
         return "Notes not found."
 
-    print_notes(notes)
+    print_notes(result)
 
 
 @input_error
@@ -360,9 +353,9 @@ def find_notes_by_tag(args, notes: Notes):
 
     (tag,) = args
 
-    notes = notes.search_by_tag(tag)
+    result = notes.search_by_tag(tag)
 
-    if len(notes) == 0:
+    if not len(result):
         return "Notes not found."
 
-    print_notes(notes)
+    print_notes(result)
