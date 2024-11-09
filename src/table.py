@@ -2,7 +2,7 @@ from prettytable import PrettyTable, SINGLE_BORDER
 
 
 def print_table(title: str, fields: list[str], rows: list[list[str]]):
-    print(title)
+    print(title) if title else print("")
     table = PrettyTable()
     table.set_style(SINGLE_BORDER)
     table.field_names = fields
