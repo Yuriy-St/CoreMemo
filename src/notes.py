@@ -1,4 +1,6 @@
 from collections import UserDict
+
+from .saveable import Saveable
 from .note import Note
 from .title import Title
 from .description import Description
@@ -6,9 +8,10 @@ from .tag import Tag
 from .custom_exceptions import RecordNotFountException
 
 
-class Notes(UserDict[int, Note]):
+class Notes(UserDict[int, Note], Saveable):
     def __init__(self):
         super().__init__()
+        Saveable.__init__(self, filename="notebook.dat")
         self.id = 1
 
     def _note_exists(self, id: int) -> bool:
@@ -35,7 +38,7 @@ class Notes(UserDict[int, Note]):
             raise RecordNotFountException("Note with this id does not exist")
 
         self.data[id].add_tag(tag)
-        
+
     def remove_note_tag(self, id: int, tag: str):
         if not self._note_exists(id):
             raise RecordNotFountException("Note with this id does not exist")
@@ -51,7 +54,7 @@ class Notes(UserDict[int, Note]):
                 if getattr(note, field).value.lower().find(query.lower()) != -1:
                     result[id] = note
                     break
-                
+
         return result
 
     def search_by_tag(self, tag: str) -> dict[int, Note]:

@@ -26,7 +26,7 @@ from src.commands import (
     remove_note,
     add_note_tag,
     remove_note_tag,
-    find_notes_by_tag
+    find_notes_by_tag,
 )
 
 
@@ -68,13 +68,14 @@ def main():
     session = PromptSession()
 
     book = AddressBook()
-    print("Loading addressbook data....")
+    notes = Notes()
+    print("Loading saved data....")
     book.load_data()
+    notes.load_data()
 
     print("\nWelcome to the assistant bot!\n")
     addressbook_commands()
     notebook_commands()
-    notes = Notes()
     while True:
         user_input = session.prompt("Enter a command: ", completer=completer)
         command, *args = parse_input(user_input)
