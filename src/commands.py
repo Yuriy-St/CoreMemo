@@ -60,21 +60,27 @@ def add_phone(args, book: AddressBook):
 @input_error
 def all_contacts(book: AddressBook):
     if len(book.data):
-        title = "Contacts:"
-        fields = ["Contact name", "Email", "Birthday", "Phones"]
-        rows = []
-        for record in book.data.values():
-            rows.append(
-                [
-                    record.name.value,
-                    "" if record.email is None else record.email.value,
-                    "" if record.birthday is None else record.birthday.value,
-                    "\n".join(p.value for p in record.phones),
-                ]
-            )
-        print_table(title, fields, rows)
+        print_contacts_table(book.data.values())
     else:
         print("Empty list")
+
+
+def print_contacts_table(records: list[Record]):
+    if not len(records):
+        return
+    title = "Contacts:" if 1 < len(records) else ""
+    fields = ["Contact name", "Email", "Birthday", "Phones"]
+    rows = [get_contact_row(record) for record in records]
+    print_table(title, fields, rows, hrules=True)
+
+
+def get_contact_row(record: Record) -> list[str]:
+    return [
+        str(record.name),
+        "" if record.email is None else str(record.email),
+        "" if record.birthday is None else str(record.birthday),
+        "\n".join(p.value for p in record.phones),
+    ]
 
 
 @input_error
@@ -150,8 +156,7 @@ def find_contact(args, book: AddressBook):
     (name,) = args
 
     record = book.find(name)
-
-    return record
+    print_contacts_table([record])
 
 
 @input_error

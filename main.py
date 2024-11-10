@@ -104,13 +104,13 @@ def main():
         elif command == "edit_email":
             print(edit_email(args, book))
         elif command == "find_contact":
-            print(find_contact(args, book))
+            find_contact(args, book)
         elif command == "remove_contact":
             print(remove_contact(args, book))
         elif command == "show_phones":
-            print(show_phones(args, book))
+            show_phones(args, book)
         elif command == "show_birthday":
-            print(show_birthday(args, book))
+            show_birthday(args, book)
         elif command == "birthdays":
             print(coming_birthdays(args, book))
         elif command == "all_contacts":

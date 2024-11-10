@@ -1,10 +1,14 @@
-from prettytable import PrettyTable, SINGLE_BORDER
+from prettytable import PrettyTable, SINGLE_BORDER, FRAME, HEADER, ALL, NONE
 
 
-def print_table(title: str, fields: list[str], rows: list[list[str]]):
+def print_table(
+    title: str, fields: list[str], rows: list[list[str]], hrules: bool = False
+):
     print(title) if title else print("")
     table = PrettyTable()
     table.set_style(SINGLE_BORDER)
+    if hrules:
+        table.hrules = ALL
     table.field_names = fields
     table.align = "l"
     table.add_rows(rows)

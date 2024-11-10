@@ -57,8 +57,8 @@ class Notes(UserDict[int, Note], Saveable):
 
         return result
 
-    def search_by_tag(self, tag: str) -> dict[int, Note]:
-        tag = Tag(tag)
+    def search_by_tag(self, value: str) -> dict[int, Note]:
+        tag = Tag(value)
         result = {}
         for id, note in self.data.items():
             if tag in note.tags:
