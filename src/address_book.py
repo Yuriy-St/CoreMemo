@@ -72,9 +72,7 @@ class AddressBook(UserDict[str, Record], Saveable):
                         congratulation_date += timedelta(days=1)
 
                     # Додаємо до списку
-                    upcoming_birthdays.append(
-                        (record.name.value, congratulation_date.strftime(DATE_FORMAT))
-                    )
+                    upcoming_birthdays.append((record, congratulation_date))
         return upcoming_birthdays
 
     def __is_contact_exists(self, key) -> bool:

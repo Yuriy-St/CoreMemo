@@ -1,3 +1,7 @@
+from collections import defaultdict
+from datetime import datetime
+
+from .constants import DATE_FORMAT
 from .decorators import input_error
 from .table import print_table
 from .address_book import AddressBook
@@ -192,7 +196,28 @@ def coming_birthdays(args, book):
     days = int(args[0])
     upcoming_birthdays = book.get_upcoming_birthdays(days)
     if upcoming_birthdays:
-        return "\n".join([f"{name}: {date}" for name, date in upcoming_birthdays])
+        title = "Upcoming birthdays:"
+        fields = ["Congratulation date", "Contact name", "Birthday", "Age"]
+        congrat_days = defaultdict(list)
+        for record, date in upcoming_birthdays:
+            congrat_days[date].append(record)
+
+        rows = []
+        for date in congrat_days:
+            contacts = congrat_days[date]
+            row = [
+                date.strftime(DATE_FORMAT),
+                "\n".join(str(contact.name) for contact in contacts),
+                "\n".join(str(contact.birthday) for contact in contacts),
+                "\n".join(
+                    str((date.year - contact.birthday.value.year) % 365)
+                    for contact in contacts
+                ),
+            ]
+            rows.append(row)
+
+        print_table(title, fields, rows, hrules=True)
+        # return "\n".join([f"{name}: {date}" for name, date in upcoming_birthdays])
     else:
         return f"No birthdays within the {days} days."
 

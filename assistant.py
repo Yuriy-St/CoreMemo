@@ -112,7 +112,7 @@ def main():
             case ["show_birthday", *args]:
                 show_birthday(args, book)
             case ["birthdays", *args]:
-                print(coming_birthdays(args, book))
+                coming_birthdays(args, book)
             case ["all_contacts", *args]:
                 all_contacts(book)
             case ["add_note", *args]:
