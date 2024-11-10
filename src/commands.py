@@ -304,9 +304,9 @@ def remove_note(args, notes: Notes):
 
 @input_error
 def find_notes_by_text(args, notes: Notes):
-    (title,) = args
+    (query,) = args
 
-    result = notes.search_by_text(title)
+    result = notes.search_by_text(query)
 
     if not len(result):
         return "Notes not found."
