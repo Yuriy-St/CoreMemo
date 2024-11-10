@@ -78,64 +78,63 @@ def main():
     notebook_commands()
     while True:
         user_input = session.prompt("Enter a command: ", completer=completer)
-        command, *args = parse_input(user_input)
 
-        if command in ["close", "exit"]:
-            print("Good bye!")
-            break
-        elif command == "hello":
-            print("How can I help you?")
-        elif command == "addressbook_commands":
-            addressbook_commands()
-        elif command == "notebook_commands":
-            notebook_commands()
-        elif command == "add_contact":
-            print(add_contact(args, book))
-        elif command == "change_phone":
-            print(change_phone(args, book))
-        elif command == "add_phone":
-            print(add_phone(args, book))
-        elif command == "remove_phone":
-            print(remove_phone(args, book))
-        elif command == "add_birthday":
-            print(add_birthday(args, book))
-        elif command == "add_email":
-            print(add_email(args, book))
-        elif command == "edit_email":
-            print(edit_email(args, book))
-        elif command == "find_contact":
-            find_contact(args, book)
-        elif command == "remove_contact":
-            print(remove_contact(args, book))
-        elif command == "show_phones":
-            show_phones(args, book)
-        elif command == "show_birthday":
-            show_birthday(args, book)
-        elif command == "birthdays":
-            print(coming_birthdays(args, book))
-        elif command == "all_contacts":
-            all_contacts(book)
-        elif command == "add_note":
-            print(add_note(args, notes))
-        elif command == "edit_note_title":
-            print(edit_note_title(args, notes))
-        elif command == "edit_note_description":
-            print(edit_note_description(args, notes))
-        elif command == "remove_note":
-            print(remove_note(args, notes))
-        elif command == "find_notes_by_tag":
-            find_notes_by_tag(args, notes)
-        elif command == "find_notes_by_text":
-            find_notes_by_text(args, notes)
-        elif command == "add_note_tag":
-            print(add_note_tag(args, notes))
-        elif command == "remove_note_tag":
-            print(remove_note_tag(args, notes))
-        elif command == "all_notes":
-            all_notes(notes)
-
-        else:
-            print("Invalid command.")
+        match parse_input(user_input):
+            case ["close"] | ["exit"]:
+                print("Good bye!")
+                break
+            case ["hello"]:
+                print("How can I help you?")
+            case ["addressbook_commands"]:
+                addressbook_commands()
+            case ["notebook_commands"]:
+                notebook_commands()
+            case ["add_contact", *args]:
+                print(add_contact(args, book))
+            case ["change_phone", *args]:
+                print(change_phone(args, book))
+            case ["add_phone", *args]:
+                print(add_phone(args, book))
+            case ["remove_phone", *args]:
+                print(remove_phone(args, book))
+            case ["add_birthday", *args]:
+                print(add_birthday(args, book))
+            case ["add_email", *args]:
+                print(add_email(args, book))
+            case ["edit_email", *args]:
+                print(edit_email(args, book))
+            case ["find_contact", *args]:
+                find_contact(args, book)
+            case ["remove_contact", *args]:
+                print(remove_contact(args, book))
+            case ["show_phones", *args]:
+                show_phones(args, book)
+            case ["show_birthday", *args]:
+                show_birthday(args, book)
+            case ["birthdays", *args]:
+                print(coming_birthdays(args, book))
+            case ["all_contacts", *args]:
+                all_contacts(book)
+            case ["add_note", *args]:
+                print(add_note(args, notes))
+            case ["edit_note_title", *args]:
+                print(edit_note_title(args, notes))
+            case ["edit_note_description", *args]:
+                print(edit_note_description(args, notes))
+            case ["remove_note", *args]:
+                print(remove_note(args, notes))
+            case ["find_notes_by_tag", *args]:
+                find_notes_by_tag(args, notes)
+            case ["find_notes_by_text", *args]:
+                find_notes_by_text(args, notes)
+            case ["add_note_tag", *args]:
+                print(add_note_tag(args, notes))
+            case ["remove_note_tag", *args]:
+                print(remove_note_tag(args, notes))
+            case ["all_notes", *args]:
+                all_notes(notes)
+            case _:
+                print("Invalid command.")
 
 
 if __name__ == "__main__":
